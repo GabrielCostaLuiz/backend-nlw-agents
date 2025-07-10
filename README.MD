@@ -1,13 +1,6 @@
 # Node.js + Fastify + Drizzle + Docker + PostgreSQL + TypeScript — Boilerplate
 
-Este repositório é uma estrutura inicial para projetos backend modernos com:
-
-- Node.js (v20+ com suporte nativo a TypeScript)
-- Fastify (framework web rápido e minimalista)
-- Drizzle ORM (para banco de dados PostgreSQL)
-- Docker (ambiente isolado e containerizado)
-- TypeScript com configuração otimizada
-- Biome (formatação e linting com ultracite)
+Este repositório é uma aplicação backend da NLW Agents, inspirada no projeto Let Me Ask da NLW Rocketseat.
 
 ---
 
