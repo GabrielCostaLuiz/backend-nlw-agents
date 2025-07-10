@@ -1,0 +1,33 @@
+import fastifyCors from '@fastify/cors'
+import fastify from 'fastify'
+import {
+  serializerCompiler,
+  validatorCompiler,
+  type ZodTypeProvider,
+} from 'fastify-type-provider-zod'
+// import { _sql } from './config/connection.ts'
+import { env } from './config/env.ts'
+import { getRoomsRoute } from './http/routes/get-rooms.ts'
+
+//Cria o servidor e integra tipagem com Zod
+const app = fastify().withTypeProvider<ZodTypeProvider>()
+
+app.register(fastifyCors, {
+  origin: 'http://localhost:5173',
+})
+
+//Faz o Fastify validar/respeitar o schema de resposta com Zod
+app.setSerializerCompiler(serializerCompiler)
+//Faz o Fastify validar body/query/params com Zod
+app.setValidatorCompiler(validatorCompiler)
+
+//Rota para saber se o servidor está rodando
+app.get('/health', () => {
+  return 'OK'
+})
+
+app.register(getRoomsRoute)
+
+app.listen({
+  port: env.PORT,
+})

@@ -1,0 +1,14 @@
+services:
+  nlw-agents-pg:
+  # imagem do POSTGRESS com suporte para executar o pgvector que é a extensão que faz busca por similaridade, usado muito com inteligencia artificial, basicamente no sentido de tipo, vamos supor que no banco eu coloquei um titulo no sentido de "o que é react" e ai um usuario faz a busca assim sobre o que é react mas não exatamente com as palavras que coloquei no titulo... Então com esse suporte, ele consegue transformar os textos em significados, ou seja, independente de como estiver escrito, se o intuito é ensinar o que seja react, então vai encontrar, a busca não é por texto, se o texto é igual, ela vê se os significados são iguais.
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_USER: docker
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: agents
+    ports:
+      - "5432:5432"
+    # PASSAR UM ARQUIVO DE CONFIG QUANDO SUBIR O BANCO DE DADOS SOMENTE NA PRIMEIRA VEZ, o que vier depois do : é para onde estamos mandando dentro do container do pgvector, ou seja, enviando para docker-entrypoint-initdb.d/setup.sql
+    volumes:
+      - ./docker/setup.sql:/docker-entrypoint-initdb.d/setup.sql
+      
