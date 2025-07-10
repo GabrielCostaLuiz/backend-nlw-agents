@@ -1,50 +1,135 @@
+# Node.js + Fastify + Drizzle + Docker + PostgreSQL + TypeScript — Boilerplate
+
+Este repositório é uma estrutura inicial para projetos backend modernos com:
+
+- Node.js (v20+ com suporte nativo a TypeScript)
+- Fastify (framework web rápido e minimalista)
+- Drizzle ORM (para banco de dados PostgreSQL)
+- Docker (ambiente isolado e containerizado)
+- TypeScript com configuração otimizada
+- Biome (formatação e linting com ultracite)
+
+---
+
+## 🚀 Setup Inicial
+
+### 1. Inicializar projeto com PNPM
+
+```bash
 pnpm init
-
 pnpm i typescript @types/node -D
-
 npx tsc --init
+```
 
-procurar por tsconfig bases no google
-ir no repositorio 
-veja a versao do node que está utilizando no repositorio
-clica no link que vai para pagina do npm
-copia o arquivo que esta la e cola no tsconfig
-adicione no tsconfig 
-    "noEmit": true,
-    "allowImportingTsExtensions": true,
+### 2. Configurar `tsconfig.json`
 
-noEmit por conta que n precisaremos fazer o build do projeto para js pois o node ja entende o ts, então n precisa compilar para .js os arquivos
-allowImportingTsExtensions permite importar os arquivos em .ts
+- Busque um `tsconfig` base atualizado compatível com a sua versão do Node no repositório oficial.
+- Substitua seu `tsconfig.json` pelo arquivo copiado do npm.
+- Adicione as opções:
 
-adicione type module no package json
+```json
+{
+  "noEmit": true,
+  "allowImportingTsExtensions": true
+}
+```
 
-pnpm i fastify @fastify/cors fastify-type-provider-zod zod  
+> **Explicação:**  
+> - `"noEmit": true` impede a geração de arquivos `.js`, pois Node 20+ entende TS nativamente.  
+> - `"allowImportingTsExtensions": true` permite importar arquivos `.ts` diretamente.
 
-a partir do node 20 ele ja entende nativamente ts, então utilizar node --experimental-strip-types no script para rodar o servidor já serve em vez de instalar tsx
+### 3. Atualizar `package.json`
 
-sempre criar o script de dev e um de start, start para produção de dev para dev, normalmente é só sem o watch, pois em produção nao precisa
+Adicione:
 
+```json
+"type": "module"
+```
+
+Para habilitar módulos ES no Node.js.
+
+---
+
+## 📦 Instalar Dependências Principais
+
+```bash
+pnpm i fastify @fastify/cors fastify-type-provider-zod zod postgres drizzle-orm
+pnpm i drizzle-kit drizzle-seed -D
 pnpm i @biomejs/biome -D
-npx ultracite init
+```
 
-docker uma ferramenta util para criar ambientes isolados de desenvlvimento
+---
 
-docker ps mostra todos os containers que estão rodando
+## 🛠️ Scripts Úteis
 
-docker compose up -d (-d é tipo para rodar em segundo plano, n prender o terminal no docker)
+No `package.json`, crie scripts:
 
-pnpm i postgres
+```json
+{
+  "scripts": {
+    "dev": "node --experimental-strip-types src/server.ts",
+    "start": "node --experimental-strip-types src/server.ts",
+    "biome:init": "npx ultracite init"
+  }
+}
+```
 
-pnpm i drizzle-orm 
+> Use `dev` para desenvolvimento com watch (se implementar), `start` para produção.
 
-pnpm i drizzle-kit -D
+---
 
-npx drizzle-kit generate
-npx drizzle-kit migrate
-npx drizzle-kit studio
+## 🐳 Docker (Containerização)
 
+- Use o Docker para criar ambientes isolados e consistentes.
+- Comandos úteis:
+
+```bash
+docker ps               # lista containers ativos
+docker compose up -d    # sobe containers em segundo plano (detach)
+```
+
+---
+
+## 📚 Drizzle ORM e Migrations
+
+Para trabalhar com banco PostgreSQL e Drizzle:
+
+```bash
+npx drizzle-kit generate   # gera arquivos de migração
+npx drizzle-kit migrate    # executa migrações no banco
+npx drizzle-kit studio     # interface visual para migrações
+```
+
+---
+
+## 🌱 Populando o banco (Seed)
+
+```bash
 pnpm i drizzle-seed -D
+```
 
-ordem de criação server - config - env - docker - biome - db - http
+Utilize o `drizzle-seed` para popular dados iniciais no banco.
 
+---
 
+## 🧹 Ordem Recomendada de Criação dos Arquivos e Módulos
+
+1. `server.ts` — entrada principal do servidor Fastify  
+2. `config/` — configuração geral e variáveis de ambiente  
+3. `env.ts` — validação e tipagem das variáveis de ambiente  
+4. `docker/` — arquivos Dockerfile, docker-compose.yml etc  
+5. Configuração do `biome` — formatação e linting  
+6. `db/` — conexão, schema e migrations com Drizzle  
+7. Rotas e controllers HTTP
+
+---
+
+## 📖 Referências e Links Úteis
+
+- [Fastify](https://www.fastify.io/)  
+- [Drizzle ORM](https://orm.drizzle.team/)  
+- [Biome (Ultracite)](https://biomejs.dev/)  
+- [Docker](https://docs.docker.com/)  
+- [Node.js ES Modules](https://nodejs.org/api/esm.html)  
+
+---
