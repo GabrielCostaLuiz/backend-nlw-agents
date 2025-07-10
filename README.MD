@@ -16,7 +16,7 @@ npx tsc --init
 
 ### 2. Configurar `tsconfig.json`
 
-- Busque um `tsconfig` base atualizado compatível com a sua versão do Node no repositório oficial.
+- Busque um `tsconfig bases` atualizado compatível com a sua versão do Node no repositório oficial.
 - Substitua seu `tsconfig.json` pelo arquivo copiado do npm.
 - Adicione as opções:
 
