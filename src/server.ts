@@ -7,7 +7,10 @@ import {
 } from 'fastify-type-provider-zod'
 // import { _sql } from './config/connection.ts'
 import { env } from './config/env.ts'
-import { getRoomsRoute } from './http/routes/get-rooms.ts'
+import { createQuestionRoute } from './http/routes/room/create-question.ts'
+import { createRoomRoute } from './http/routes/room/create-room.ts'
+import { getRoomQuestionsRoute } from './http/routes/room/get-room-questions.ts'
+import { getRoomsRoute } from './http/routes/room/get-rooms.ts'
 
 //Cria o servidor e integra tipagem com Zod
 const app = fastify().withTypeProvider<ZodTypeProvider>()
@@ -27,6 +30,9 @@ app.get('/health', () => {
 })
 
 app.register(getRoomsRoute)
+app.register(createRoomRoute)
+app.register(getRoomQuestionsRoute)
+app.register(createQuestionRoute)
 
 app.listen({
   port: env.PORT,
