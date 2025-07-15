@@ -15,6 +15,13 @@
       "when": 1752280643982,
       "tag": "0001_cultured_lila_cheney",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1752371426312,
+      "tag": "0002_furry_bromley",
+      "breakpoints": true
     }
   ]
 }
